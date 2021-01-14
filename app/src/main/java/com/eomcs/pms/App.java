@@ -36,6 +36,6 @@ public class App {
     System.out.println("사진: "+pi);
     System.out.println("전화: "+ph);
     System.out.println("가입일: "+now);
-
+//ㅇㅇㅇㅇㅇㅇㅇㅇ
   }
 }

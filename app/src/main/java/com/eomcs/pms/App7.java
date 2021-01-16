@@ -35,6 +35,8 @@ public class App7 {
 
     int size = 0;
 
+
+
     while(true) {
       System.out.println("1. 신규 회원 2. 기존 회원 3. 관리자 모드 4. 종료 ");
       int command = scanner.nextInt();
@@ -42,7 +44,7 @@ public class App7 {
       if(command == 1) {
         for (int i =  0; i < MEMBER; i++) {
           System.out.println("[회원 등록]");
-          scanner.nextLine();
+
           System.out.println("id");
           System.out.printf("> ");
           id[i]= scanner.nextLine();
@@ -94,6 +96,18 @@ public class App7 {
       }else if(command == 2) {
         System.out.println("[기존 회원]");
         System.out.println("남은 기간: ");
+
+        System.out.println("bmi지수 계산기 ");
+        System.out.println("몸무게: ");
+        System.out.printf("> ");
+        double weight = scanner.nextDouble();
+
+        System.out.println("키: ");
+        System.out.printf("> ");
+        double height = scanner.nextDouble();
+
+        double bmi = weight/height/height ;
+        System.out.printf("bmi 지수: %.2f\n" ,bmi);
 
       }else if (command ==3) {
         // 회원 목록과 남은 일수 

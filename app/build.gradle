@@ -18,7 +18,7 @@ plugins {
 // 변경하고 싶다면 다음과 같이 설정하라.
 eclipse {
     project {
-        name = "bitcamp-project"
+        name = "bitcamp-project1"
     }
 }
 

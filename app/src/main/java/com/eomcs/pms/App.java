@@ -27,9 +27,15 @@ public class App {
     // 각 회원 목록 데이터를 저장할 메모리 준비
     MemberHandler memberList = new MemberHandler();
     // 각 프로젝트 목록 데이터를 저장할 메모리 준비
-    ProjectHandler projectList = new ProjectHandler();
+    // 생성자에서 MemberHandler 객체를 주입하라고 강요한다.
+    // ProjectHandler 객체를 만들려면 반드시 주입해야 한다.
+    ProjectHandler projectList = new ProjectHandler(memberList);
+
     // 각 작업 목록 데이터를 저장할 메모리 준비
-    TaskHandler taskList = new TaskHandler();
+    TaskHandler taskList = new TaskHandler(memberList);
+
+
+
 
     loop:
       while (true) {
@@ -43,13 +49,13 @@ public class App {
             memberList.list();
             break;
           case "/project/add":
-            projectList.add(memberList);
+            projectList.add();
             break;
           case "/project/list":
             projectList.list();
             break;
           case "/task/add":
-            taskList.add(memberList);
+            taskList.add();
             break;
           case "/task/list":
             taskList.list();

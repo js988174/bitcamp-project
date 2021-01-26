@@ -12,7 +12,13 @@ public class TaskHandler {
   Task[] tasks = new Task[LENGTH];
   int size = 0;
 
-  public void add(MemberHandler memberList) {
+  MemberHandler memberList;
+
+  public TaskHandler(MemberHandler memberHandler) {
+    this.memberList = memberHandler;
+  }
+
+  public void add() {
     System.out.println("[작업 등록]");
 
     Task t = new Task();

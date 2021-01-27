@@ -1,14 +1,11 @@
 package com.eomcs.pms;
 
 import com.eomcs.pms.handler.BoardHandler;
-import com.eomcs.pms.handler.BoardHandler2;
-import com.eomcs.pms.handler.BoardHandler3;
-import com.eomcs.pms.handler.BoardHandler4;
-import com.eomcs.pms.handler.BoardHandler5;
 import com.eomcs.pms.handler.MemberHandler;
 import com.eomcs.pms.handler.ProjectHandler;
 import com.eomcs.pms.handler.TaskHandler;
 import com.eomcs.util.Prompt;
+
 
 // 1) Prompt 클래스를 별도의 패키지로 분류한다
 //    - com.eomcs.util 패키지 생성
@@ -21,9 +18,37 @@ import com.eomcs.util.Prompt;
 
 //    - 핸들러 클래스를 다른 패키지의 클래스가 사용할 수 있도록 public 으로 공개한다.
 //    - 핸들러의 메서드를 다른 패키지의 클래스가 사용할 수 있도록 public 으로 공개한다.
-public class App {
+
+// 1) '/board/add' 명령 처리 추가
+// 2) '/board/list' 명령 처리 추가
+// 3) 두 번째 게시판 추가
+// 4) 세 번째, 네 번째, 다섯 번째, 여섯 번째 게시판 추가
+
+public class App{
 
   public static void main(String[] args) {
+
+    BoardHandler boardlist = new BoardHandler();
+    // 각 게시판 데이터를 저장할 메모리 준
+
+    BoardHandler boardList1 = new BoardHandler();
+    BoardHandler boardList2 = new BoardHandler();
+    BoardHandler boardList3 = new BoardHandler();
+    BoardHandler boardList4 = new BoardHandler();
+    BoardHandler boardList5 = new BoardHandler();
+    BoardHandler boardList6 = new BoardHandler();
+
+    // 각 회원 목록 데이터를 저장할 메모리 준비
+    MemberHandler memberList = new MemberHandler();
+    // 각 프로젝트 목록 데이터를 저장할 메모리 준비
+    ProjectHandler projectList = new ProjectHandler();
+
+    projectList.memberList = memberList;
+    // 각 작업 목록 데이터를 저장할 메모리 준비
+    TaskHandler taskList = new TaskHandler();
+
+    taskList.memberList = memberList;
+
 
     loop:
       while (true) {
@@ -31,52 +56,58 @@ public class App {
 
         switch (command) {
           case "/member/add":
-            MemberHandler.add();
+            memberList.add();
             break;
           case "/member/list":
-            MemberHandler.list();
+            memberList.list();
             break;
           case "/project/add":
-            ProjectHandler.add();
+            projectList.add();
             break;
           case "/project/list":
-            ProjectHandler.list();
+            projectList.list();
             break;
           case "/task/add":
-            TaskHandler.add();
+            taskList.add();
             break;
           case "/task/list":
-            TaskHandler.list();
+            taskList.list();
             break;
-          case "/board/add" :
-            BoardHandler.add();
+          case "/board/add":
+            boardList1.add(boardList1);
             break;
-          case "/board/list" :
-            BoardHandler.list();
+          case "/board/list":
+            boardList1.list(boardList1);
             break;
-          case "/board2/add" :
-            BoardHandler2.add();
+          case "/board2/add":
+            boardList2.add(boardList2);
             break;
-          case "/board2/list" :
-            BoardHandler2.list();
+          case "/board2/list":
+            boardList2.list(boardList2);
             break;
-          case "/board3/add" :
-            BoardHandler3.add();
+          case "/board3/add":
+            boardList3.add(boardList3);
             break;
-          case "/board3/list" :
-            BoardHandler3.list();
+          case "/board3/list":
+            boardList3.list(boardList3);
             break;
-          case "/board4/add" :
-            BoardHandler4.add();
+          case "/board4/add":
+            boardList4.add(boardList4);
             break;
-          case "/board4/list" :
-            BoardHandler4.list();
+          case "/board4/list":
+            boardList4.list(boardList4);
             break;
-          case "/board5/add" :
-            BoardHandler5.add();
+          case "/board5/add":
+            boardList5.add(boardList5);
             break;
-          case "/board5/list" :
-            BoardHandler5.list();
+          case "/board5/list":
+            boardList5.list(boardList5);
+            break;
+          case "/board6/add":
+            boardList6.add(boardList6);
+            break;
+          case "/board6/list":
+            boardList6.list(boardList6);
             break;
           case "quit":
           case "exit":

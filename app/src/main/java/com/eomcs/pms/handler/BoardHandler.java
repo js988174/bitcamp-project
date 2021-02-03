@@ -2,11 +2,12 @@ package com.eomcs.pms.handler;
 
 import java.sql.Date;
 import com.eomcs.pms.domain.Board;
+import com.eomcs.util.List;
 import com.eomcs.util.Prompt;
 
 public class BoardHandler {
 
-  BoardList boardList = new BoardList();
+  private List boardList = new List();
 
   public void add() {
     System.out.println("[게시글 등록]");
@@ -27,9 +28,10 @@ public class BoardHandler {
   public void list() {
     System.out.println("[게시글 목록]");
 
-    Board[] boards = boardList.toArray();
+    Object[] list = boardList.toArray();
 
-    for (Board b : boards) {
+    for (Object obj : list) {
+      Board b = (Board) obj;
       // 번호, 제목, 등록일, 작성자, 조회수, 좋아요
       System.out.printf("%d, %s, %s, %s, %d, %d\n", 
           b.getNo(), 
@@ -40,19 +42,33 @@ public class BoardHandler {
           b.getLike());
     }
   }
+  // 번호로 인덱스를 찾음
+  public int indexOf(Object obj) {
+    Object[] list = this.toArray();
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].equals(obj)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+
+
 
   public void detail() {
     System.out.println("[게시글 상세보기]");
 
     int no = Prompt.inputInt("번호? ");
+    Board board =findByNo(no);
 
-    Board board = boardList.get(no);
-    if (board == null) {
+    if ( board== null) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
     }
 
-    board.setViewCount(board.getViewCount() +1);
+    board.setViewCount(board.getViewCount() + 1);
+
     System.out.printf("제목: %s\n", board.getTitle());
     System.out.printf("내용: %s\n", board.getContent());
     System.out.printf("작성자: %s\n", board.getWriter());
@@ -66,7 +82,7 @@ public class BoardHandler {
 
     int no = Prompt.inputInt("번호? ");
 
-    Board board = boardList.get(no);
+    Board board = findByNo(no);
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
@@ -92,7 +108,9 @@ public class BoardHandler {
 
     int no = Prompt.inputInt("번호? ");
 
-    Board board = boardList.get(no);
+
+    Board board = findByNo(no);
+
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다.");
       return;
@@ -101,7 +119,7 @@ public class BoardHandler {
     String input = Prompt.inputString("정말 삭제하시겠습니까?(y/N) ");
 
     if (input.equalsIgnoreCase("Y")) {
-      boardList.delete(no);
+      boardList.delete(board); // 오버로딩한 메서드를 사용하여 삭제한다.
 
       System.out.println("게시글을 삭제하였습니다.");
 
@@ -109,6 +127,18 @@ public class BoardHandler {
       System.out.println("게시글 삭제를 취소하였습니다.");
     }
 
+  }
+
+  // 번호로 객체를 찾음
+  private Board findByNo(int boardNo) {
+    Object[] list = boardList.toArray();
+    for (Object obj : list) {
+      Board b = (Board)obj;
+      if (b.getNo() == boardNo) {
+        return b;
+      }
+    }
+    return null;
   }
 }
 

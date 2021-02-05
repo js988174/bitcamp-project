@@ -4,7 +4,7 @@ public class List {
 
   private Node first;
   private Node last;
-  private int size = 0;  
+  protected int size = 0;  
 
   public void add(Object obj) {
     Node node = new Node(obj);
@@ -114,6 +114,18 @@ public class List {
       cursor = cursor.next;
     }
     return deleted;
+  }
+  public int indexOf(Object obj) {
+    Object[] list = this.toArray();
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].equals(obj)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  public int size() {
+    return this.size;
   }
 
   static class Node {

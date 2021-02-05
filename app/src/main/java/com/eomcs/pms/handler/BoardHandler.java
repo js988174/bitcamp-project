@@ -42,19 +42,6 @@ public class BoardHandler {
           b.getLike());
     }
   }
-  // 번호로 인덱스를 찾음
-  public int indexOf(Object obj) {
-    Object[] list = this.toArray();
-    for (int i = 0; i < list.length; i++) {
-      if (list[i].equals(obj)) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-
-
 
   public void detail() {
     System.out.println("[게시글 상세보기]");

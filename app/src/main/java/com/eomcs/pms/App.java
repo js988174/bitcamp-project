@@ -4,35 +4,52 @@ import com.eomcs.pms.handler.BoardHandler;
 import com.eomcs.pms.handler.MemberHandler;
 import com.eomcs.pms.handler.ProjectHandler;
 import com.eomcs.pms.handler.TaskHandler;
+<<<<<<< HEAD
 import com.eomcs.util.AbstractIterator;
 import com.eomcs.util.Prompt;
 import com.eomcs.util.Queue;
 import com.eomcs.util.QueueIterator;
+=======
+import com.eomcs.util.Iterator;
+import com.eomcs.util.Prompt;
+import com.eomcs.util.Queue;
+>>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
 import com.eomcs.util.Stack;
 import com.eomcs.util.StackIterator;
 
 public class App {
 
-
-  // 사용자가 입력한 명령을 지정할 컬렉션 객체 준비
+  // 사용자가 입력한 명령을 저장할 컬렉션 객체 준비
   static Stack commandStack = new Stack();
   static Queue commandQueue = new Queue();
+<<<<<<< HEAD
 
   public static void main(String[] args) throws CloneNotSupportedException{
+=======
+
+
+  public static void main(String[] args) throws CloneNotSupportedException {
+>>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
 
     BoardHandler boardHandler = new BoardHandler();
     MemberHandler memberHandler = new MemberHandler();
     ProjectHandler projectHandler = new ProjectHandler(memberHandler);
     TaskHandler taskHandler = new TaskHandler(memberHandler);
 
-
     loop:
       while (true) {
         String command = com.eomcs.util.Prompt.inputString("명령> ");
 
+<<<<<<< HEAD
         if (command.length() == 0)
           continue;
 
+=======
+        if (command.length() == 0) // 사용자가 빈 문자열을 입력하면 다시 입력하도록 요구한다.
+          continue;
+
+        // 사용자가 입력한 명령을 보관해둔다.
+>>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
         commandStack.push(command);
         commandQueue.offer(command);
 
@@ -97,11 +114,19 @@ public class App {
           case "/board/delete":
             boardHandler.delete();
             break;
+<<<<<<< HEAD
           case "history" :
             printCommandHistory(new StackIterator(commandStack.clone()));
             break;
           case "history2" :
             printCommandHistory(new QueueIterator(commandQueue.clone()));
+=======
+          case "history":
+            printCommandHistory(commandStack.iterator());
+            break;
+          case "history2": 
+            printCommandHistory(commandStack.iterator());
+>>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
             break;
           case "quit":
           case "exit":
@@ -116,8 +141,12 @@ public class App {
     Prompt.close();
   }
 
+<<<<<<< HEAD
 
   static void printCommandHistory(AbstractIterator iterator) {
+=======
+  static void printCommandHistory(Iterator iterator) {
+>>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
     int count = 0;
     while (iterator.hasNext()) {
       System.out.println(iterator.next());

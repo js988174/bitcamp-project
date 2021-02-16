@@ -9,8 +9,6 @@ public class Task {
   private String owner;
   private int status;
 
-
-
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -20,6 +18,7 @@ public class Task {
     result = prime * result + no;
     return result;
   }
+
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -43,7 +42,6 @@ public class Task {
       return false;
     return true;
   }
-
 
   public int getNo() {
     return no;

@@ -35,12 +35,11 @@ public class List {
   }
 
   public Object get(int index) {
-    if (index < 0 || index >= size) {
+    if (index < 0 || index >= this.size) {
       return null;
-
     }
 
-    int count = 0; 
+    int count = 0;
     Node cursor = first;
     while (cursor != null) {
       if (index == count++) {
@@ -52,11 +51,9 @@ public class List {
   }
 
   public boolean delete(Object obj) {
-    Object deleted = null;
     Node cursor = first;
     while (cursor != null) {
       if (cursor.obj.equals(obj)) {
-        deleted = cursor.obj;
         this.size--;
         if (first == last) {
           first = last = null;
@@ -82,10 +79,10 @@ public class List {
   }
 
   public Object delete(int index) {
-
-    if (index < 0 || index >= size) {
+    if (index < 0 || index >= this.size) {
       return null;
     }
+
     Object deleted = null;
     int count = 0;
     Node cursor = first;
@@ -115,6 +112,7 @@ public class List {
     }
     return deleted;
   }
+
   public int indexOf(Object obj) {
     Object[] list = this.toArray();
     for (int i = 0; i < list.length; i++) {
@@ -124,13 +122,12 @@ public class List {
     }
     return -1;
   }
+
   public int size() {
     return this.size;
   }
 
-  static class Node {
-    // 다형적 변수
-    // - 해당 클래스의 인스턴스 뿐만 아니라 그 하위 클래스의 인스턴스까지 지정할 수 있다.
+  private static class Node {
     Object obj;
     Node next;
     Node prev;
@@ -139,4 +136,28 @@ public class List {
       this.obj = obj;
     }
   }
+
+  interface X {
+    void m();
+  }
+
+  public Iterator iterator() throws CloneNotSupportedException {
+    return new Iterator() {
+      int cursor = 0;
+
+      @Override
+      public boolean hasNext() {
+        return cursor < List.this.size();
+      }
+
+      @Override
+      public Object next() {
+        return List.this.get(cursor++);
+      }
+    };
+  }
+
+
+
 }
+

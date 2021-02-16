@@ -46,19 +46,5 @@ public class Stack extends List implements Cloneable {
     };
   }
 
-<<<<<<< HEAD
-  @Override
-  public Stack clone() throws CloneNotSupportedException {
-    // TODO Auto-generated method stub
-    Stack stack = new Stack();
-    for (int i = 0; i < size; i ++) {
-      stack.push(get(i));
-    }
-    return (Stack) super.clone();
-  }
-=======
 
->>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
 }
-
-

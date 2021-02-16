@@ -3,7 +3,6 @@ package com.eomcs.pms.handler;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.util.Iterator;
 import com.eomcs.util.List;
-import com.eomcs.util.ListIterator;
 import com.eomcs.util.Prompt;
 
 public class MemberHandler {
@@ -32,17 +31,11 @@ public class MemberHandler {
     System.out.println("회원을 등록하였습니다.");
   }
 
-  public void list() throws CloneNotSupportedException{
+  public void list() throws CloneNotSupportedException {
     System.out.println("[회원 목록]");
 
-<<<<<<< HEAD
-    ListIterator iterator = new ListIterator(this.memberList);
-
-    Object[] list = memberList.toArray();
-=======
     Iterator iterator = memberList.iterator();
 
->>>>>>> 079888418047efecdc59d01ffb2b0f38dabf15f3
     while (iterator.hasNext()) {
       Member m = (Member) iterator.next();
       // 번호, 이름, 이메일, 전화, 가입일

@@ -1,16 +1,47 @@
 package com.eomcs.pms.domain;
 
-import java.io.Serializable;
 import java.sql.Date;
+import com.eomcs.util.CsvObject;
 
-public class Task implements Serializable {
-  private static final long serialVersionUID = 1L;
-
+public class Task implements CsvObject{
   private int no;
   private String content;
   private Date deadline;
   private String owner;
   private int status;
+
+  public Task() {}
+
+  public Task(String csv) {
+    String fields[] = csv.split(",");
+    this.setNo(Integer.parseInt(fields[0]));       
+    this.setContent(fields[1]);       
+    this.setDeadline(Date.valueOf(fields[2]));       
+    this.setStatus(Integer.parseInt(fields[3]));     
+    this.setOwner(fields[4]);
+  }
+
+  @Override
+  public String toCsvString() {
+    return String.format("%d,%s,%d,%s",
+        this.getNo(),
+        this.getDeadline(),
+        this.getStatus(),
+        this.getOwner());
+  }
+
+  public static Task valueOfCsv(String csv) {
+
+    String fields[] = csv.split(",");
+    Task task = new Task();     
+    task.setNo(Integer.parseInt(fields[0]));       
+    task.setContent(fields[1]);       
+    task.setDeadline(Date.valueOf(fields[2]));       
+    task.setStatus(Integer.parseInt(fields[3]));     
+    task.setOwner(fields[4]);
+
+    return task;
+  }
 
   @Override
   public int hashCode() {

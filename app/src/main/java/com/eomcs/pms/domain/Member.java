@@ -1,11 +1,9 @@
 package com.eomcs.pms.domain;
 
-import java.io.Serializable;
 import java.sql.Date;
+import com.eomcs.util.CsvObject;
 
-public class Member implements Serializable {
-  private static final long serialVersionUID = 1L;
-
+public class Member implements CsvObject{
   private int no;
   private String name;
   private String email;
@@ -14,6 +12,41 @@ public class Member implements Serializable {
   private String tel;
   private Date registeredDate;
 
+  public Member() {}
+
+  public Member(String csv) {
+    String fields[] = csv.split(",");
+    this.setName(fields[0]);
+    this.setEmail(fields[1]);  
+    this.setPassword(fields[2]);
+    this.setPhoto(fields[3]); 
+    this.setTel(fields[4]);
+    this.setRegisteredDate(Date.valueOf(fields[5]));
+  }
+
+  @Override
+  public String toCsvString() {
+    return String.format("%s,%s,%s,%s,%s\n",
+        this.getName(),
+        this.getEmail(),
+        this.getPassword(),
+        this.getPhoto(),
+        this.getTel(),
+        this.getRegisteredDate());
+  }
+
+  public static Member valueOfCsv(String csv) {
+    String fields[] = csv.split(",");
+    Member m = new Member();
+    m.setName(fields[0]);
+    m.setEmail(fields[1]);  
+    m.setPassword(fields[2]);
+    m.setPhoto(fields[3]); 
+    m.setTel(fields[4]);
+    m.setRegisteredDate(Date.valueOf(fields[5]));
+    return m;
+
+  }
   @Override
   public int hashCode() {
     final int prime = 31;

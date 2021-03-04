@@ -3,7 +3,7 @@ package com.eomcs.pms.domain;
 import java.sql.Date;
 import com.eomcs.util.CsvObject;
 
-public class Member implements CsvObject{
+public class Member implements CsvObject {
   private int no;
   private String name;
   private String email;
@@ -15,18 +15,26 @@ public class Member implements CsvObject{
   public Member() {}
 
   public Member(String csv) {
-    String fields[] = csv.split(",");
-    this.setName(fields[0]);
-    this.setEmail(fields[1]);  
-    this.setPassword(fields[2]);
-    this.setPhoto(fields[3]); 
-    this.setTel(fields[4]);
-    this.setRegisteredDate(Date.valueOf(fields[5]));
+    String[] fields = csv.split(",");
+    this.setNo(Integer.parseInt(fields[0]));
+    this.setName(fields[1]);
+    this.setEmail(fields[2]);
+    this.setPassword(fields[3]);
+    this.setPhoto(fields[4]);
+    this.setTel(fields[5]);
+    this.setRegisteredDate(Date.valueOf(fields[6]));
+  }
+
+  @Override
+  public String toString() {
+    return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password
+        + ", photo=" + photo + ", tel=" + tel + ", registeredDate=" + registeredDate + "]";
   }
 
   @Override
   public String toCsvString() {
-    return String.format("%s,%s,%s,%s,%s\n",
+    return String.format("%d,%s,%s,%s,%s,%s,%s", 
+        this.getNo(),
         this.getName(),
         this.getEmail(),
         this.getPassword(),
@@ -36,17 +44,18 @@ public class Member implements CsvObject{
   }
 
   public static Member valueOfCsv(String csv) {
-    String fields[] = csv.split(",");
-    Member m = new Member();
-    m.setName(fields[0]);
-    m.setEmail(fields[1]);  
-    m.setPassword(fields[2]);
-    m.setPhoto(fields[3]); 
-    m.setTel(fields[4]);
-    m.setRegisteredDate(Date.valueOf(fields[5]));
-    return m;
-
+    String[] fields = csv.split(",");
+    Member member = new Member();
+    member.setNo(Integer.parseInt(fields[0]));
+    member.setName(fields[1]);
+    member.setEmail(fields[2]);
+    member.setPassword(fields[3]);
+    member.setPhoto(fields[4]);
+    member.setTel(fields[5]);
+    member.setRegisteredDate(Date.valueOf(fields[6]));
+    return member;
   }
+
   @Override
   public int hashCode() {
     final int prime = 31;

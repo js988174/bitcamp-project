@@ -3,7 +3,7 @@ package com.eomcs.pms.domain;
 import java.sql.Date;
 import com.eomcs.util.CsvObject;
 
-public class Board implements CsvObject{
+public class Board implements CsvObject {
   private int no;
   private String title;
   private String content;
@@ -16,13 +16,19 @@ public class Board implements CsvObject{
 
   public Board(String csv) {
     String[] fields = csv.split(","); // 번호,제목,내용,작성자,등록일,조회수
-
     this.setNo(Integer.parseInt(fields[0]));
     this.setTitle(fields[1]);
     this.setContent(fields[2]);
     this.setWriter(fields[3]);
     this.setRegisteredDate(Date.valueOf(fields[4]));
     this.setViewCount(Integer.parseInt(fields[5]));
+  }
+
+  @Override
+  public String toString() {
+    return "Board [no=" + no + ", title=" + title + ", content=" + content + ", writer=" + writer
+        + ", registeredDate=" + registeredDate + ", viewCount=" + viewCount + ", like=" + like
+        + "]";
   }
 
   @Override

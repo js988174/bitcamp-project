@@ -3,7 +3,7 @@ package com.eomcs.pms.domain;
 import java.sql.Date;
 import com.eomcs.util.CsvObject;
 
-public class Task implements CsvObject{
+public class Task implements CsvObject {
   private int no;
   private String content;
   private Date deadline;
@@ -13,33 +13,38 @@ public class Task implements CsvObject{
   public Task() {}
 
   public Task(String csv) {
-    String fields[] = csv.split(",");
-    this.setNo(Integer.parseInt(fields[0]));       
-    this.setContent(fields[1]);       
-    this.setDeadline(Date.valueOf(fields[2]));       
-    this.setStatus(Integer.parseInt(fields[3]));     
-    this.setOwner(fields[4]);
+    String[] data = csv.split(",");
+    this.setNo(Integer.parseInt(data[0]));
+    this.setContent(data[1]);
+    this.setDeadline(Date.valueOf(data[2]));
+    this.setStatus(Integer.parseInt(data[3]));
+    this.setOwner(data[4]);
+  }
+
+  @Override
+  public String toString() {
+    return "Task [no=" + no + ", content=" + content + ", deadline=" + deadline + ", owner=" + owner
+        + ", status=" + status + "]";
   }
 
   @Override
   public String toCsvString() {
-    return String.format("%d,%s,%d,%s",
+    return String.format("%d,%s,%s,%d,%s", 
         this.getNo(),
+        this.getContent(),
         this.getDeadline(),
         this.getStatus(),
         this.getOwner());
   }
 
   public static Task valueOfCsv(String csv) {
-
-    String fields[] = csv.split(",");
-    Task task = new Task();     
-    task.setNo(Integer.parseInt(fields[0]));       
-    task.setContent(fields[1]);       
-    task.setDeadline(Date.valueOf(fields[2]));       
-    task.setStatus(Integer.parseInt(fields[3]));     
-    task.setOwner(fields[4]);
-
+    String[] data = csv.split(",");
+    Task task = new Task();
+    task.setNo(Integer.parseInt(data[0]));
+    task.setContent(data[1]);
+    task.setDeadline(Date.valueOf(data[2]));
+    task.setStatus(Integer.parseInt(data[3]));
+    task.setOwner(data[4]);
     return task;
   }
 

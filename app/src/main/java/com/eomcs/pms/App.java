@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import com.eomcs.context.ApplicationContextListener;
+import com.eomcs.pms.context.ApplicationContextListener;
 import com.eomcs.pms.domain.Board;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
@@ -42,14 +42,12 @@ import com.eomcs.util.Prompt;
 
 public class App {
 
-  // 옵저버 객체(ApplicationContextListener 구현체) 목록을 저장할 컬렉션 준비
   List<ApplicationContextListener> listeners = new ArrayList<>();
 
   // 사용자가 입력한 명령을 저장할 컬렉션 객체 준비
   ArrayDeque<String> commandStack = new ArrayDeque<>();
   LinkedList<String> commandQueue = new LinkedList<>();
 
-  // 옵저버와 값을 공유하기 위해 사용할 공통 저장소 객체를 준비
   Map<String,Object> appContext = new HashMap<>();
 
   public static void main(String[] args) {
@@ -74,11 +72,11 @@ public class App {
 
     notifyOnServiceStarted();
 
-    // FileListener가 준비한 List 객체를 꺼낸다.
     List<Board> boardList = (List<Board>) appContext.get("boardList");
     List<Member> memberList = (List<Member>) appContext.get("memberList");
     List<Project> projectList = (List<Project>) appContext.get("projectList");
     List<Task> taskList = (List<Task>) appContext.get("taskList");
+
 
     // 사용자 명령을 처리하는 객체를 맵에 보관한다.
     HashMap<String,Command> commandMap = new HashMap<>();
@@ -155,32 +153,23 @@ public class App {
         System.out.println(); // 이전 명령의 실행을 구분하기 위해 빈 줄 출력
       }
 
-    Prompt.close();
 
+    Prompt.close();
     notifyOnServiceStopped();
   }
 
   private void notifyOnServiceStarted() {
     for (ApplicationContextListener listener : listeners) {
-      // 옵저버의 메서드를 호출할 때 옵저버에게 전달하고 싶은 값이 있다면,
-      // 맵 객체에 담아서 전달하면 된다.
-      // 옵저버 또한 작업한 결과를 App에게 리턴해주고 싶다면,
-      // 맵 객체에 담으면 된다.
-      // 이를 위해 옵저버 메서드를 호출할 때 파라미터 값으로 맵 객체를 넘긴다.
       listener.contextInitialized(appContext);
     }
   }
-
   private void notifyOnServiceStopped() {
     for (ApplicationContextListener listener : listeners) {
-      // 옵저버의 메서드를 호출할 때 옵저버에게 전달하고 싶은 값이 있다면,
-      // 맵 객체에 담아서 전달하면 된다.
-      // 옵저버 또한 작업한 결과를 App에게 리턴해주고 싶다면,
-      // 맵 객체에 담으면 된다.
-      // 이를 위해 옵저버 메서드를 호출할 때 파라미터 값으로 맵 객체를 넘긴다.
       listener.contextDestroyed(appContext);
     }
   }
+
+
 
   private void printCommandHistory(Iterator<String> iterator) {
     int count = 0;
@@ -194,6 +183,7 @@ public class App {
       }
     }
   }
+
 
 
 }

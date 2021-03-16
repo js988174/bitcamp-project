@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import com.eomcs.context.ApplicationContextListener;
+import com.eomcs.pms.context.ApplicationContextListener;
 import com.eomcs.pms.domain.Board;
 import com.eomcs.pms.domain.Member;
 import com.eomcs.pms.domain.Project;
@@ -18,13 +18,8 @@ import com.eomcs.util.CsvObject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class FileListener implements ApplicationContextListener {
+public class FileListener implements ApplicationContextListener{
 
-  // 데이터 파일 정보
-  File boardFile = new File("boards.json");
-  File memberFile = new File("members.json");
-  File projectFile = new File("projects.json");
-  File taskFile = new File("tasks.json");
 
   // VO 를 저장할 컬렉션 객체
   List<Board> boardList;
@@ -32,30 +27,35 @@ public class FileListener implements ApplicationContextListener {
   List<Project> projectList;
   List<Task> taskList;
 
+  // 데이터 파일 정보
+  File boardFile = new File("boards.json");
+  File memberFile = new File("members.json");
+  File projectFile = new File("projects.json");
+  File taskFile = new File("tasks.json");
 
+
+  //파일에서 데이터를 읽어온다.(데이터 로딩)
   @Override
   public void contextInitialized(Map<String,Object> context) {
-    // 파일에서 데이터를 읽어온다.(데이터 로딩)
     boardList = loadObjects(boardFile, Board.class);
     memberList = loadObjects(memberFile, Member.class);
     projectList = loadObjects(projectFile, Project.class);
     taskList = loadObjects(taskFile, Task.class);
 
-    // App 클래스에서 사용할 수 있도록 컬렉션 객체를 맵 객체에 담는다.
-    context.put("boardList", boardList);
+    context.put("boardList",boardList);
     context.put("memberList", memberList);
     context.put("projectList", projectList);
     context.put("taskList", taskList);
   }
-
+  // 게시글 데이터를 파일로 출력한다.
   @Override
   public void contextDestroyed(Map<String,Object> context) {
-    // 데이터를 파일로 출력한다.
     saveObjects(boardFile, boardList);
     saveObjects(memberFile, memberList);
     saveObjects(projectFile, projectList);
     saveObjects(taskFile, taskList);
   }
+
 
   private <T> List<T> loadObjects(File file, Class<T> elementType) {
 
@@ -75,7 +75,7 @@ public class FileListener implements ApplicationContextListener {
 
     } catch (Exception e) {
       System.out.printf("%s 파일 데이터 로딩 중 오류 발생!\n", file.getName());
-      return null;
+      return new ArrayList<T>();
     }
   }
 
@@ -88,5 +88,4 @@ public class FileListener implements ApplicationContextListener {
       System.out.printf("파일 %s에 데이터를 저장하는 중에 오류 발생!\n", file.getName());
     }
   }
-
 }

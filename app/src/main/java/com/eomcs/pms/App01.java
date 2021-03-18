@@ -5,10 +5,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -44,9 +43,8 @@ import com.eomcs.pms.handler.TaskUpdateHandler;
 import com.eomcs.util.CsvObject;
 import com.eomcs.util.Prompt;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-public class App {
+public class App01 {
 
   // 사용자가 입력한 명령을 저장할 컬렉션 객체 준비
   static ArrayDeque<String> commandStack = new ArrayDeque<>();
@@ -68,10 +66,10 @@ public class App {
 
 
     // 파일에서 데이터를 읽어온다.(데이터 로딩)
-    loadObjects(boardFile, boardList, Board.class);
-    loadObjects(memberFile, memberList, Member.class);
-    loadObjects(projectFile, projectList, Project.class);
-    loadObjects(taskFile, taskList, Task.class);
+    loadObjects(boardFile, boardList, Board[].class);
+    loadObjects(memberFile, memberList, Member[].class);
+    loadObjects(projectFile, projectList, Project[].class);
+    loadObjects(taskFile, taskList, Task[].class);
 
     // 사용자 명령을 처리하는 객체를 맵에 보관한다.
     HashMap<String,Command> commandMap = new HashMap<>();
@@ -170,7 +168,7 @@ public class App {
     }
   }
 
-  static <T> void loadObjects(File file, List<T> list, Class<T> elementType) {
+  static <T> void loadObjects(File file, List<T> list, Class<T[]> arrType) {
 
     try (BufferedReader in = new BufferedReader(new FileReader(file))) {
 
@@ -186,14 +184,17 @@ public class App {
       // 2) StringBuilder 객체에 보관된 값을 꺼내 자바 객체로 만든다.
       Gson gson = new Gson();
 
-      // JSON 문자열 ==> 컬렉션 객체 
-      Type collectionType = TypeToken.getParameterized(Collection.class, elementType).getType();
+      // JSON 문자열을 배열 객체로 변환
+      T[] arr = gson.fromJson(strBuilder.toString(), arrType);
 
-      // JSON 문자열을 컬렉션 객체로 변환
-      Collection<T> collection = gson.fromJson(strBuilder.toString(), collectionType);
- 
-      // JSON 문자열을 읽어 만든 객체 목록을 해당 컬렉션으로 옮긴다.
-      list.addAll(collection);
+      // 배열에 보관된 객체 주소를 컬렉션에 옮긴다.
+      // 방법1) 배열에 보관된 객체를 한 개씩 컬렉션에 담기
+      //      for (T obj : arr) {
+      //        list.add(obj);
+      //      }
+
+      // 방법2) Arrays.asList() 메서드를 사용하여 컬렉션 객체 만들기
+      list.addAll(Arrays.asList(arr));
 
       System.out.printf("%s 파일 데이터 로딩!\n", file.getName());
 
